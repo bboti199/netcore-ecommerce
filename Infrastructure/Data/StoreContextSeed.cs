@@ -26,7 +26,7 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
-                if (!EnumerableExtensions.Any(context.ProductTypes))
+                if (!context.ProductTypes.Any())
                 {
                     var typesData = File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
 
@@ -37,7 +37,7 @@ namespace Infrastructure.Data
                     await context.SaveChangesAsync();
                 }
 
-                if (!EnumerableExtensions.Any(context.Products))
+                if (!context.Products.Any())
                 {
                     var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
 
@@ -50,8 +50,8 @@ namespace Infrastructure.Data
             }
             catch (Exception ex)
             {
-                var logger = LoggerFactoryExtensions.CreateLogger<StoreContextSeed>(loggerFactory);
-                LoggerExtensions.LogError(logger, ex.Message);
+                var logger = loggerFactory.CreateLogger<StoreContextSeed>();
+                logger.LogError(ex.Message);
             }
         }
     }
